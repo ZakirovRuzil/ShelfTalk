@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "accounts",
+    "books",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
