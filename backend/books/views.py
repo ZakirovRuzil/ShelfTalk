@@ -11,7 +11,9 @@ from .serializers import BookSerializer, ReviewSerializer
 class BookListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = BookSerializer
-    queryset = Book.objects.annotate(average_rating=Avg("reviews__rating"), reviews_count=Count("reviews"))
+    queryset = Book.objects.annotate(
+        average_rating=Avg("reviews__rating"), reviews_count=Count("reviews"),
+    ).order_by("title", "id")
 
 
 class BookDetailView(generics.RetrieveAPIView):
