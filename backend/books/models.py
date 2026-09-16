@@ -31,9 +31,12 @@ class Review(models.Model):
     class Meta:
         ordering = ("-created_at", "-id")
         constraints = [
-            models.UniqueConstraint(fields=["user", "book"], name="one_review_per_user_book"),
+            models.UniqueConstraint(
+                fields=["user", "book"], name="one_review_per_user_book"
+            ),
             models.CheckConstraint(
-                condition=models.Q(rating__gte=1, rating__lte=10), name="rating_between_1_and_10",
+                condition=models.Q(rating__gte=1, rating__lte=10),
+                name="rating_between_1_and_10",
             ),
         ]
 

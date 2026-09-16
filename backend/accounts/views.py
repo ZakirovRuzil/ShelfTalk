@@ -1,8 +1,7 @@
 from django.db import IntegrityError, transaction
 from rest_framework import generics, permissions, serializers
-from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
+from .serializers import RegisterSerializer, UserSerializer
 
 
 class RegisterView(generics.CreateAPIView):
@@ -16,11 +15,9 @@ class RegisterView(generics.CreateAPIView):
             with transaction.atomic():
                 serializer.save()
         except IntegrityError:
-            raise serializers.ValidationError({"email": ["A user with this email already exists."]})
-
-
-class LoginView(TokenObtainPairView):
-    serializer_class = LoginSerializer
+            raise serializers.ValidationError(
+                {"email": ["A user with this email already exists."]}
+            )
 
 
 class CurrentUserView(generics.RetrieveAPIView):

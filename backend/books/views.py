@@ -12,7 +12,8 @@ class BookListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = BookSerializer
     queryset = Book.objects.annotate(
-        average_rating=Avg("reviews__rating"), reviews_count=Count("reviews"),
+        average_rating=Avg("reviews__rating"),
+        reviews_count=Count("reviews"),
     ).order_by("title", "id")
 
 
@@ -33,13 +34,17 @@ class BookReviewsView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         book = get_object_or_404(Book, pk=self.kwargs["book_id"])
         if Review.objects.filter(user=self.request.user, book=book).exists():
-            raise serializers.ValidationError({"detail": "You have already reviewed this book."})
+            raise serializers.ValidationError(
+                {"detail": "You have already reviewed this book."}
+            )
         try:
             with transaction.atomic():
                 serializer.save(user=self.request.user, book=book)
         except IntegrityError:
             # UniqueConstraint remains the final guard for concurrent requests.
-            raise serializers.ValidationError({"detail": "You have already reviewed this book."})
+            raise serializers.ValidationError(
+                {"detail": "You have already reviewed this book."}
+            )
 
 
 class ReviewDetailView(generics.UpdateAPIView, generics.DestroyAPIView):

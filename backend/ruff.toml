@@ -1,0 +1,6 @@
+target-version = "py312"
+line-length = 88
+extend-exclude = ["var"]
+
+[lint]
+select = ["E", "F", "I"]

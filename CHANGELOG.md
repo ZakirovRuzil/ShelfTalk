@@ -1,9 +1,11 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
-The format follows Keep a Changelog, and the project uses Semantic Versioning.
+All notable changes to this project will be documented in this file. The format follows
+Keep a Changelog, and the project uses Semantic Versioning.
 
-## [1.0.0] - 2026-09-14
+## [Unreleased]
+
+## [1.0.0] - 2026-09-16
 
 ### Added
 
@@ -15,3 +17,11 @@ The format follows Keep a Changelog, and the project uses Semantic Versioning.
 - PostgreSQL and environment configuration.
 - 24 backend tests for authentication, permissions, validation, and database behavior.
 - Setup instructions and API documentation.
+- Ruff, ESLint, and Prettier configuration with repeatable lint and format commands.
+
+### Changed
+
+- Format Python, Vue, TypeScript, CSS, and documentation for readability.
+- Use four-space indentation and template-first Vue single-file components.
+- Simplify registration serializers and authentication wrappers.
+- Shorten the README to setup and everyday commands.
