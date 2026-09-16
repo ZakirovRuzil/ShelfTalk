@@ -1,8 +1,10 @@
 {
-  "semi": false,
-  "singleQuote": true,
-  "printWidth": 88,
-  "singleAttributePerLine": true,
-  "htmlWhitespaceSensitivity": "ignore",
-  "proseWrap": "always"
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 4,
+    "useTabs": false,
+    "printWidth": 88,
+    "singleAttributePerLine": true,
+    "htmlWhitespaceSensitivity": "ignore",
+    "proseWrap": "always"
 }

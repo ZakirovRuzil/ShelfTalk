@@ -8,6 +8,7 @@ Keep a Changelog, and the project uses Semantic Versioning.
 ### Changed
 
 - Format Python, Vue, TypeScript, CSS, and documentation for readability.
+- Use four-space indentation and template-first Vue single-file components.
 - Simplify registration serializers and authentication wrappers.
 - Shorten the README to setup and everyday commands.
 

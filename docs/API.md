@@ -20,9 +20,9 @@ Request:
 
 ```json
 {
-  "email": "reader@example.com",
-  "display_name": "Reader",
-  "password": "A-good-book-2026!"
+    "email": "reader@example.com",
+    "display_name": "Reader",
+    "password": "A-good-book-2026!"
 }
 ```
 
@@ -30,11 +30,11 @@ Response:
 
 ```json
 {
-  "id": 1,
-  "email": "reader@example.com",
-  "display_name": "Reader",
-  "first_name": "",
-  "last_name": ""
+    "id": 1,
+    "email": "reader@example.com",
+    "display_name": "Reader",
+    "first_name": "",
+    "last_name": ""
 }
 ```
 
@@ -94,11 +94,11 @@ Response **200**:
 
 ```json
 {
-  "id": 1,
-  "email": "reader@example.com",
-  "display_name": "Reader",
-  "first_name": "",
-  "last_name": ""
+    "id": 1,
+    "email": "reader@example.com",
+    "display_name": "Reader",
+    "first_name": "",
+    "last_name": ""
 }
 ```
 
@@ -114,15 +114,15 @@ id:
 
 ```json
 [
-  {
-    "id": 1,
-    "title": "1984",
-    "author": "George Orwell",
-    "description": "A story about power and individual freedom.",
-    "publication_year": 1949,
-    "average_rating": 8.5,
-    "reviews_count": 2
-  }
+    {
+        "id": 1,
+        "title": "1984",
+        "author": "George Orwell",
+        "description": "A story about power and individual freedom.",
+        "publication_year": 1949,
+        "average_rating": 8.5,
+        "reviews_count": 2
+    }
 ]
 ```
 
@@ -137,13 +137,13 @@ JWT может дать 401 до проверки method).
 
 ```json
 {
-  "id": 1,
-  "title": "1984",
-  "author": "George Orwell",
-  "description": "A story about power and individual freedom.",
-  "publication_year": 1949,
-  "average_rating": null,
-  "reviews_count": 0
+    "id": 1,
+    "title": "1984",
+    "author": "George Orwell",
+    "description": "A story about power and individual freedom.",
+    "publication_year": 1949,
+    "average_rating": null,
+    "reviews_count": 0
 }
 ```
 
@@ -158,14 +158,14 @@ JWT может дать 401 до проверки method).
 
 ```json
 [
-  {
-    "id": 1,
-    "rating": 8,
-    "text": "I really enjoyed this book.",
-    "author": { "id": 1, "display_name": "Reader" },
-    "created_at": "2026-09-14T12:00:00Z",
-    "updated_at": "2026-09-14T12:00:00Z"
-  }
+    {
+        "id": 1,
+        "rating": 8,
+        "text": "I really enjoyed this book.",
+        "author": { "id": 1, "display_name": "Reader" },
+        "created_at": "2026-09-14T12:00:00Z",
+        "updated_at": "2026-09-14T12:00:00Z"
+    }
 ]
 ```
 
@@ -184,12 +184,12 @@ Response **201**:
 
 ```json
 {
-  "id": 1,
-  "rating": 8,
-  "text": "I really enjoyed this book.",
-  "author": { "id": 1, "display_name": "Reader" },
-  "created_at": "2026-09-14T12:00:00Z",
-  "updated_at": "2026-09-14T12:00:00Z"
+    "id": 1,
+    "rating": 8,
+    "text": "I really enjoyed this book.",
+    "author": { "id": 1, "display_name": "Reader" },
+    "created_at": "2026-09-14T12:00:00Z",
+    "updated_at": "2026-09-14T12:00:00Z"
 }
 ```
 
@@ -221,12 +221,12 @@ Response **200**:
 
 ```json
 {
-  "id": 1,
-  "rating": 9,
-  "text": "Even better on rereading.",
-  "author": { "id": 1, "display_name": "Reader" },
-  "created_at": "2026-09-14T12:00:00Z",
-  "updated_at": "2026-09-14T12:30:00Z"
+    "id": 1,
+    "rating": 9,
+    "text": "Even better on rereading.",
+    "author": { "id": 1, "display_name": "Reader" },
+    "created_at": "2026-09-14T12:00:00Z",
+    "updated_at": "2026-09-14T12:30:00Z"
 }
 ```
 
