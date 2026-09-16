@@ -16,7 +16,9 @@ class User(AbstractUser):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(Lower("email"), name="unique_email_case_insensitive"),
+            models.UniqueConstraint(
+                Lower("email"), name="unique_email_case_insensitive"
+            ),
         ]
 
     def save(self, *args, **kwargs):

@@ -1,7 +1,19 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
-The format follows Keep a Changelog, and the project uses Semantic Versioning.
+All notable changes to this project will be documented in this file. The format follows
+Keep a Changelog, and the project uses Semantic Versioning.
+
+## [Unreleased]
+
+### Changed
+
+- Format Python, Vue, TypeScript, CSS, and documentation for readability.
+- Simplify registration serializers and authentication wrappers.
+- Shorten the README to setup and everyday commands.
+
+### Added
+
+- Ruff, ESLint, and Prettier configuration with repeatable lint and format commands.
 
 ## [1.0.0] - 2026-09-14
 

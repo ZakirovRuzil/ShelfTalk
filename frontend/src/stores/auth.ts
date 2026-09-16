@@ -2,7 +2,7 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import * as api from '../api/auth'
 import { clearTokens } from '../api/client'
-import type { LoginRequest, RegisterRequest, User } from '../types'
+import type { LoginRequest, User } from '../types'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
@@ -14,9 +14,13 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function fetchCurrentUser() {
-    if (!localStorage.getItem('access_token')) return
+    if (!localStorage.getItem('access_token')) {
+      return
+    }
     const currentUser = await api.getCurrentUser()
-    if (localStorage.getItem('access_token')) user.value = currentUser
+    if (localStorage.getItem('access_token')) {
+      user.value = currentUser
+    }
   }
 
   async function login(payload: LoginRequest) {
@@ -31,12 +35,19 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  async function register(payload: RegisterRequest) { await api.register(payload) }
-
   window.addEventListener('auth-expired', logout)
   window.addEventListener('storage', (event) => {
-    if (event.key === 'refresh_token' || event.key === null) user.value = null
+    if (event.key === 'refresh_token' || event.key === null) {
+      user.value = null
+    }
   })
 
-  return { user, isAuthenticated, login, register, logout, fetchCurrentUser }
+  return {
+    user,
+    isAuthenticated,
+    login,
+    register: api.register,
+    logout,
+    fetchCurrentUser,
+  }
 })

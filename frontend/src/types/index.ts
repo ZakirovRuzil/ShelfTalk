@@ -25,7 +25,18 @@ export interface Review {
   updated_at: string
 }
 
-export interface LoginRequest { email: string; password: string }
-export interface RegisterRequest extends LoginRequest { display_name: string }
-export interface Tokens { access: string; refresh: string }
-export interface ReviewRequest { rating: number; text: string }
+export interface LoginRequest {
+  email: string
+  password: string
+}
+export interface RegisterRequest extends LoginRequest {
+  display_name: string
+}
+export interface Tokens {
+  access: string
+  refresh: string
+}
+export interface ReviewRequest {
+  rating: number
+  text: string
+}

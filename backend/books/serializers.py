@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from accounts.models import User
+
 from .models import Book, Review
 
 
@@ -11,8 +12,13 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = (
-            "id", "title", "author", "description", "publication_year",
-            "average_rating", "reviews_count",
+            "id",
+            "title",
+            "author",
+            "description",
+            "publication_year",
+            "average_rating",
+            "reviews_count",
         )
 
 
