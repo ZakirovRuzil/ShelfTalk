@@ -1,13 +1,13 @@
 <template>
     <section class="auth-layout">
         <div class="auth-intro">
-            <p class="eyebrow">YOUR NEXT CHAPTER</p>
+            <p class="eyebrow">{{ t('login.eyebrow') }}</p>
             <h1>
-                Good books.
+                {{ t('login.titleLine1') }}
                 <br />
-                Better conversations.
+                {{ t('login.titleLine2') }}
             </h1>
-            <p>Come back to your shelf and share what stayed with you.</p>
+            <p>{{ t('login.intro') }}</p>
             <span
                 class="auth-decoration"
                 aria-hidden="true"
@@ -19,14 +19,14 @@
             class="panel auth-form"
             @submit.prevent="submit"
         >
-            <h2>Welcome back</h2>
-            <p class="muted">Log in to share your thoughts.</p>
+            <h2>{{ t('login.formTitle') }}</h2>
+            <p class="muted">{{ t('login.formSubtitle') }}</p>
             <p
                 v-if="route.query.registered"
                 class="message success"
                 role="status"
             >
-                Your account is ready. You can log in now.
+                {{ t('login.registered') }}
             </p>
             <p
                 v-if="error"
@@ -35,7 +35,7 @@
             >
                 {{ error }}
             </p>
-            <label for="email">Email</label>
+            <label for="email">{{ t('common.email') }}</label>
             <input
                 id="email"
                 v-model="email"
@@ -44,7 +44,7 @@
                 required
                 maxlength="254"
             />
-            <label for="password">Password</label>
+            <label for="password">{{ t('common.password') }}</label>
             <input
                 id="password"
                 v-model="password"
@@ -56,12 +56,12 @@
                 class="button"
                 :disabled="busy"
             >
-                {{ busy ? 'Logging in…' : 'Log in' }}
+                {{ busy ? t('login.submitting') : t('login.submit') }}
                 <span aria-hidden="true">→</span>
             </button>
             <p class="form-foot">
-                New here?
-                <RouterLink to="/register">Create an account</RouterLink>
+                {{ t('common.newHere') }}
+                <RouterLink to="/register">{{ t('login.createAccount') }}</RouterLink>
             </p>
         </form>
     </section>
@@ -72,6 +72,7 @@ import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { errorMessage } from '../api/client'
+import { t } from '../i18n'
 
 const auth = useAuthStore()
 const router = useRouter()

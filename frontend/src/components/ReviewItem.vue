@@ -2,22 +2,20 @@
     <article class="review-item">
         <div class="review-heading">
             <div>
-                <strong>{{ review.author.display_name || 'Reader' }}</strong>
+                <strong>
+                    {{ review.author.display_name || t('review.anonymous') }}
+                </strong>
                 <span
                     v-if="owned"
                     class="you-badge"
                 >
-                    You
+                    {{ t('review.you') }}
                 </span>
                 <p class="review-date">
-                    {{
-                        new Date(review.created_at).toLocaleDateString('en', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                        })
-                    }}
-                    <span v-if="review.updated_at !== review.created_at">· Edited</span>
+                    {{ formatDate(review.created_at) }}
+                    <span v-if="review.updated_at !== review.created_at">
+                        · {{ t('review.edited') }}
+                    </span>
                 </p>
             </div>
             <span class="rating-badge">
@@ -35,14 +33,14 @@
                 :disabled="busy"
                 @click="$emit('edit')"
             >
-                Edit review
+                {{ t('review.edit') }}
             </button>
             <button
                 class="text-button danger"
                 :disabled="busy"
                 @click="$emit('delete')"
             >
-                Delete
+                {{ t('review.delete') }}
             </button>
         </div>
     </article>
@@ -50,6 +48,7 @@
 
 <script setup lang="ts">
 import type { Review } from '../types'
+import { formatDate, t } from '../i18n'
 defineProps<{ review: Review; owned: boolean; busy: boolean }>()
 defineEmits<{ edit: []; delete: [] }>()
 </script>

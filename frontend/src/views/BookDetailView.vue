@@ -3,14 +3,14 @@
         class="back-link"
         to="/"
     >
-        ← Back to the collection
+        ← {{ t('detail.back') }}
     </RouterLink>
     <p
         v-if="loading"
         class="state"
         role="status"
     >
-        Opening the book…
+        {{ t('detail.loading') }}
     </p>
     <div
         v-else-if="error"
@@ -26,7 +26,7 @@
             class="button secondary"
             @click="load"
         >
-            Try again
+            {{ t('common.tryAgain') }}
         </button>
     </div>
     <template v-else-if="book">
@@ -36,50 +36,50 @@
                 :class="`cover-${book.id % 4}`"
                 aria-hidden="true"
             >
-                <span class="cover-edition">THE SHELFTALK LIBRARY</span>
+                <span class="cover-edition">{{ t('book.edition') }}</span>
                 <span class="cover-title">{{ book.title }}</span>
                 <span class="cover-ornament">✳</span>
                 <span class="cover-author">{{ book.author }}</span>
             </div>
             <div class="detail-copy">
                 <p class="eyebrow">
-                    FROM THE COLLECTION · {{ book.publication_year ?? 'YEAR UNKNOWN' }}
+                    {{
+                        t('detail.eyebrow', {
+                            year: book.publication_year ?? t('detail.yearUnknown'),
+                        })
+                    }}
                 </p>
                 <h1>{{ book.title }}</h1>
-                <p class="detail-author">by {{ book.author }}</p>
+                <p class="detail-author">
+                    {{ t('detail.byAuthor', { author: book.author }) }}
+                </p>
                 <div class="detail-rating">
                     <span class="rating-badge">
                         ★
                         {{
                             book.average_rating === null
-                                ? 'Not rated'
-                                : `${book.average_rating.toFixed(1)} / 10`
+                                ? t('book.notRated')
+                                : t('common.outOfTen', {
+                                      value: book.average_rating.toFixed(1),
+                                  })
                         }}
                     </span>
                     <span class="muted">
-                        {{ book.reviews_count }}
-                        {{
-                            book.reviews_count === 1
-                                ? 'reader review'
-                                : 'reader reviews'
-                        }}
+                        {{ t('detail.readerReviews', { count: book.reviews_count }) }}
                     </span>
                 </div>
-                <h2>About the book</h2>
+                <h2>{{ t('detail.about') }}</h2>
                 <p class="description">
-                    {{
-                        book.description ||
-                        'No description has been added for this book yet.'
-                    }}
+                    {{ book.description || t('detail.noDescription') }}
                 </p>
             </div>
         </section>
         <section class="reviews-section">
             <div class="section-heading">
                 <div>
-                    <p class="eyebrow">BETWEEN THE LINES</p>
+                    <p class="eyebrow">{{ t('detail.reviewsEyebrow') }}</p>
                     <h2>
-                        What readers are saying
+                        {{ t('detail.reviewsTitle') }}
                         <span class="count">{{ reviews.length }}</span>
                     </h2>
                 </div>
@@ -104,8 +104,7 @@
                         v-if="!reviews.length"
                         class="panel empty-review"
                     >
-                        Every conversation starts somewhere. Be the first to share your
-                        thoughts.
+                        {{ t('detail.noReviews') }}
                     </p>
                     <ReviewItem
                         v-for="review in reviews"
@@ -126,13 +125,13 @@
                         <h3>
                             {{
                                 editing
-                                    ? 'Edit your review'
-                                    : 'Your reading, your words.'
+                                    ? t('detail.formTitleEdit')
+                                    : t('detail.formTitleNew')
                             }}
                         </h3>
-                        <p class="muted">What stayed with you?</p>
+                        <p class="muted">{{ t('detail.formSubtitle') }}</p>
                         <label for="rating">
-                            Your rating
+                            {{ t('detail.yourRating') }}
                             <span class="muted">/ 10</span>
                         </label>
                         <select
@@ -145,10 +144,10 @@
                                 :key="value"
                                 :value="value"
                             >
-                                {{ value }} / 10
+                                {{ t('common.outOfTen', { value }) }}
                             </option>
                         </select>
-                        <label for="review-text">Your review</label>
+                        <label for="review-text">{{ t('detail.yourReview') }}</label>
                         <textarea
                             id="review-text"
                             ref="textInput"
@@ -156,7 +155,7 @@
                             rows="6"
                             required
                             :disabled="busy"
-                            placeholder="Tell other readers what you thought…"
+                            :placeholder="t('detail.reviewPlaceholder')"
                         ></textarea>
                         <button
                             class="button"
@@ -164,10 +163,10 @@
                         >
                             {{
                                 busy
-                                    ? 'Saving…'
+                                    ? t('detail.saving')
                                     : editing
-                                      ? 'Save changes'
-                                      : 'Publish review'
+                                      ? t('detail.saveChanges')
+                                      : t('detail.publish')
                             }}
                         </button>
                         <button
@@ -177,45 +176,44 @@
                             :disabled="busy"
                             @click="resetForm"
                         >
-                            Cancel
+                            {{ t('common.cancel') }}
                         </button>
                     </form>
                     <div
                         v-else-if="auth.isAuthenticated"
                         class="panel"
                     >
-                        <p class="eyebrow">YOUR VOICE IS ON THE SHELF</p>
-                        <h3>Thanks for sharing.</h3>
+                        <p class="eyebrow">{{ t('detail.doneEyebrow') }}</p>
+                        <h3>{{ t('detail.doneTitle') }}</h3>
                         <p class="muted">
-                            Changed your mind after a reread? You can edit your review
-                            anytime.
+                            {{ t('detail.doneText') }}
                         </p>
                         <button
                             class="button secondary"
                             :disabled="busy"
                             @click="startEdit"
                         >
-                            Edit your review
+                            {{ t('detail.editReview') }}
                         </button>
                     </div>
                     <div
                         v-else
                         class="panel"
                     >
-                        <p class="eyebrow">ADD YOUR PERSPECTIVE</p>
-                        <h3>Read it? Let’s talk.</h3>
+                        <p class="eyebrow">{{ t('detail.guestEyebrow') }}</p>
+                        <h3>{{ t('detail.guestTitle') }}</h3>
                         <p class="muted">
-                            Log in to rate this book and join the conversation.
+                            {{ t('detail.guestText') }}
                         </p>
                         <RouterLink
                             to="/login"
                             class="button"
                         >
-                            Log in to review →
+                            {{ t('detail.guestLogin') }} →
                         </RouterLink>
                         <p class="form-foot">
-                            New here?
-                            <RouterLink to="/register">Join ShelfTalk</RouterLink>
+                            {{ t('common.newHere') }}
+                            <RouterLink to="/register">{{ t('nav.join') }}</RouterLink>
                         </p>
                     </div>
                 </aside>
@@ -232,6 +230,7 @@ import { createReview, deleteReview, getReviews, updateReview } from '../api/rev
 import { errorMessage } from '../api/client'
 import { useAuthStore } from '../stores/auth'
 import ReviewItem from '../components/ReviewItem.vue'
+import { t } from '../i18n'
 import type { Book, Review } from '../types'
 
 const route = useRoute()
@@ -295,8 +294,7 @@ async function submit() {
         rating.value > 10 ||
         !text.value.trim()
     ) {
-        actionError.value =
-            'Choose a whole-number rating from 1 to 10 and write your review.'
+        actionError.value = t('detail.invalidForm')
         return
     }
     busy.value = true
@@ -309,9 +307,7 @@ async function submit() {
         } else {
             await createReview(bookId, payload)
         }
-        notice.value = editing.value
-            ? 'Your review has been updated.'
-            : 'Your review is on the shelf. Thanks for sharing!'
+        notice.value = editing.value ? t('detail.updated') : t('detail.published')
         resetForm()
         await refresh()
     } catch (cause) {
@@ -321,10 +317,7 @@ async function submit() {
     }
 }
 async function removeReview() {
-    if (
-        !myReview.value ||
-        !window.confirm('Delete your review? This cannot be undone.')
-    ) {
+    if (!myReview.value || !window.confirm(t('detail.confirmDelete'))) {
         return
     }
     busy.value = true
@@ -333,7 +326,7 @@ async function removeReview() {
     try {
         await deleteReview(myReview.value.id)
         resetForm()
-        notice.value = 'Your review has been deleted.'
+        notice.value = t('detail.deleted')
         await refresh()
     } catch (cause) {
         actionError.value = errorMessage(cause)
