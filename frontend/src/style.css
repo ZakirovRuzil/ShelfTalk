@@ -122,6 +122,24 @@ main {
     max-width: 180px;
     overflow-wrap: anywhere;
 }
+.lang-switch {
+    display: flex;
+    gap: 2px;
+}
+.lang-switch button {
+    background: none;
+    border: 0;
+    border-radius: 4px;
+    padding: 4px 6px;
+    color: #687169;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+.lang-switch button[aria-pressed='true'] {
+    background: #304d3c;
+    color: #f9f8f3;
+}
 .button {
     display: inline-flex;
     align-items: center;
@@ -809,6 +827,11 @@ small {
     }
     .nav-login {
         font-size: 0.75rem;
+        white-space: nowrap;
+    }
+    .lang-switch button {
+        padding: 3px 4px;
+        font-size: 0.7rem;
     }
     .user-name {
         max-width: 100px;

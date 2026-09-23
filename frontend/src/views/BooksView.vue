@@ -1,22 +1,22 @@
 <template>
     <section class="hero">
         <div>
-            <p class="eyebrow">A HOME FOR YOUR NEXT GREAT READ</p>
+            <p class="eyebrow">{{ t('books.eyebrow') }}</p>
             <h1>
-                A little shelf.
+                {{ t('books.titleLine1') }}
                 <br />
-                <em>A lot to say.</em>
+                <em>{{ t('books.titleLine2') }}</em>
             </h1>
             <p class="hero-description">
-                Explore timeless stories, find a new perspective,
+                {{ t('books.descriptionLine1') }}
                 <br class="desktop-break" />
-                and share the books that stay with you.
+                {{ t('books.descriptionLine2') }}
             </p>
             <a
                 href="#catalog"
                 class="browse-link"
             >
-                Explore the collection
+                {{ t('books.explore') }}
                 <span aria-hidden="true">↓</span>
             </a>
         </div>
@@ -27,23 +27,25 @@
             <div class="sun"></div>
             <div class="illustrated-book book-one">
                 <span>
-                    Stories
+                    {{ t('books.artBookOneLine1') }}
                     <br />
-                    that stay.
+                    {{ t('books.artBookOneLine2') }}
                 </span>
-                <i>the ShelfTalk collection</i>
+                <i>{{ t('books.artBookOneCaption') }}</i>
             </div>
             <div class="illustrated-book book-two">
                 <span>
-                    ONE
-                    <br />
-                    MORE
-                    <br />
-                    CHAPTER
+                    <template
+                        v-for="(word, index) in t('books.artBookTwo').split(' ')"
+                        :key="index"
+                    >
+                        <br v-if="index" />
+                        {{ word }}
+                    </template>
                 </span>
             </div>
             <div class="shelf-line"></div>
-            <span class="art-caption">OPEN A BOOK. START A CONVERSATION.</span>
+            <span class="art-caption">{{ t('books.artCaption') }}</span>
         </div>
     </section>
     <section
@@ -52,9 +54,9 @@
     >
         <div class="section-heading">
             <div>
-                <p class="eyebrow">THE COLLECTION</p>
+                <p class="eyebrow">{{ t('books.collectionEyebrow') }}</p>
                 <h2>
-                    Find your next chapter
+                    {{ t('books.collectionTitle') }}
                     <span
                         v-if="!loading && !error"
                         class="count"
@@ -69,13 +71,13 @@
                     class="sr-only"
                     for="search"
                 >
-                    Search by title or author
+                    {{ t('books.searchLabel') }}
                 </label>
                 <input
                     id="search"
                     v-model="search"
                     type="search"
-                    placeholder="Search by title or author…"
+                    :placeholder="t('books.searchPlaceholder')"
                 />
             </div>
         </div>
@@ -84,7 +86,7 @@
             class="state"
             role="status"
         >
-            Gathering the books…
+            {{ t('books.loading') }}
         </p>
         <div
             v-else-if="error"
@@ -100,27 +102,27 @@
                 class="button secondary"
                 @click="load"
             >
-                Try again
+                {{ t('common.tryAgain') }}
             </button>
         </div>
         <div
             v-else-if="!books.length"
             class="state"
         >
-            <h3>The shelf is waiting.</h3>
-            <p>There are no books in the collection yet. Check back soon.</p>
+            <h3>{{ t('books.emptyTitle') }}</h3>
+            <p>{{ t('books.emptyText') }}</p>
         </div>
         <div
             v-else-if="!filteredBooks.length"
             class="state"
         >
-            <h3>No books found.</h3>
-            <p>Try another title or author.</p>
+            <h3>{{ t('books.notFoundTitle') }}</h3>
+            <p>{{ t('books.notFoundText') }}</p>
             <button
                 class="text-button"
                 @click="search = ''"
             >
-                Clear search
+                {{ t('books.clearSearch') }}
             </button>
         </div>
         <div
@@ -141,6 +143,7 @@ import { computed, onMounted, ref } from 'vue'
 import { getBooks } from '../api/books'
 import { errorMessage } from '../api/client'
 import BookCard from '../components/BookCard.vue'
+import { t } from '../i18n'
 import type { Book } from '../types'
 
 const books = ref<Book[]>([])

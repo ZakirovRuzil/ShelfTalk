@@ -1,16 +1,13 @@
 <template>
     <section class="auth-layout">
         <div class="auth-intro">
-            <p class="eyebrow">THERE’S ROOM ON THE SHELF</p>
+            <p class="eyebrow">{{ t('register.eyebrow') }}</p>
             <h1>
-                Every reader
+                {{ t('register.titleLine1') }}
                 <br />
-                has a perspective.
+                {{ t('register.titleLine2') }}
             </h1>
-            <p>
-                Find a familiar favorite. Discover something new. Tell us what you
-                think.
-            </p>
+            <p>{{ t('register.intro') }}</p>
             <span
                 class="auth-decoration"
                 aria-hidden="true"
@@ -22,8 +19,8 @@
             class="panel auth-form"
             @submit.prevent="submit"
         >
-            <h2>Join the conversation</h2>
-            <p class="muted">A small community starts with your next review.</p>
+            <h2>{{ t('register.formTitle') }}</h2>
+            <p class="muted">{{ t('register.formSubtitle') }}</p>
             <p
                 v-if="error"
                 class="message error"
@@ -31,7 +28,7 @@
             >
                 {{ error }}
             </p>
-            <label for="name">Display name</label>
+            <label for="name">{{ t('register.displayName') }}</label>
             <input
                 id="name"
                 v-model="displayName"
@@ -39,8 +36,8 @@
                 required
                 maxlength="80"
             />
-            <small>This name will appear beside your reviews.</small>
-            <label for="email">Email</label>
+            <small>{{ t('register.displayNameHelp') }}</small>
+            <label for="email">{{ t('common.email') }}</label>
             <input
                 id="email"
                 v-model="email"
@@ -49,7 +46,7 @@
                 required
                 maxlength="254"
             />
-            <label for="password">Password</label>
+            <label for="password">{{ t('common.password') }}</label>
             <input
                 id="password"
                 v-model="password"
@@ -59,19 +56,17 @@
                 required
                 aria-describedby="password-help"
             />
-            <small id="password-help">
-                At least 8 characters. Avoid common or entirely numeric passwords.
-            </small>
+            <small id="password-help">{{ t('register.passwordHelp') }}</small>
             <button
                 class="button"
                 :disabled="busy"
             >
-                {{ busy ? 'Creating account…' : 'Create account' }}
+                {{ busy ? t('register.submitting') : t('register.submit') }}
                 <span aria-hidden="true">→</span>
             </button>
             <p class="form-foot">
-                Already a reader here?
-                <RouterLink to="/login">Log in</RouterLink>
+                {{ t('register.haveAccount') }}
+                <RouterLink to="/login">{{ t('register.login') }}</RouterLink>
             </p>
         </form>
     </section>
@@ -82,6 +77,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { errorMessage } from '../api/client'
+import { t } from '../i18n'
 
 const auth = useAuthStore()
 const router = useRouter()

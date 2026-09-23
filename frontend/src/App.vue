@@ -3,7 +3,7 @@
         class="skip-link"
         href="#main"
     >
-        Skip to content
+        {{ t('app.skipLink') }}
     </a>
     <AppNavbar />
     <main
@@ -20,7 +20,7 @@
                 class="text-button"
                 @click="error = ''"
             >
-                Dismiss
+                {{ t('app.dismiss') }}
             </button>
         </p>
         <RouterView
@@ -32,13 +32,13 @@
             class="state"
             role="status"
         >
-            Opening your shelf…
+            {{ t('app.loading') }}
         </p>
     </main>
     <footer class="container footer">
         <span>ShelfTalk</span>
-        <p>A little shelf. A lot to say.</p>
-        <span>Made for the love of reading.</span>
+        <p>{{ t('app.footerTagline') }}</p>
+        <span>{{ t('app.footerNote') }}</span>
     </footer>
 </template>
 
@@ -47,6 +47,7 @@ import { onMounted, ref } from 'vue'
 import AppNavbar from './components/AppNavbar.vue'
 import { useAuthStore } from './stores/auth'
 import { errorMessage } from './api/client'
+import { t } from './i18n'
 
 const auth = useAuthStore()
 const ready = ref(false)

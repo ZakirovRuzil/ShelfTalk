@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { hasKey, t } from '../i18n'
 
 const client = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api',
@@ -51,24 +52,26 @@ client.interceptors.response.use(undefined, async (error: unknown) => {
     return Promise.reject(error)
 })
 
+function fieldLabel(field: string): string {
+    const key = `fields.${field}`
+    return hasKey(key) ? t(key) : field.replaceAll('_', ' ')
+}
+
 export function errorMessage(error: unknown): string {
     if (!axios.isAxiosError(error)) {
-        return 'Something went wrong. Please try again.'
+        return t('errors.generic')
     }
     if (!error.response) {
-        return 'Cannot reach ShelfTalk. Check your connection and try again.'
+        return t('errors.network')
     }
     if (error.response.status >= 500) {
-        return 'The server could not complete your request. Please try again.'
+        return t('errors.server')
     }
     if (error.response.status === 401) {
-        return (
-            'Please sign in again. Your email or password may be incorrect, ' +
-            'or your session has expired.'
-        )
+        return t('errors.unauthorized')
     }
     if (error.response.status === 404) {
-        return 'This book or review could not be found.'
+        return t('errors.notFound')
     }
     const data: unknown = error.response.data
     if (data && typeof data === 'object') {
@@ -77,11 +80,11 @@ export function errorMessage(error: unknown): string {
                 const message = Array.isArray(value) ? value.join(' ') : String(value)
                 return ['detail', 'non_field_errors'].includes(field)
                     ? message
-                    : `${field.replaceAll('_', ' ')}: ${message}`
+                    : `${fieldLabel(field)}: ${message}`
             })
             .join(' ')
     }
-    return 'The request could not be completed. Please try again.'
+    return t('errors.request')
 }
 
 export default client
