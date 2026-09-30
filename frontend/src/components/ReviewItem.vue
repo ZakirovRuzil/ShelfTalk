@@ -46,6 +46,11 @@
     </article>
 </template>
 
+<!--
+    Один отзыв в списке на странице книги. Кнопки редактирования/удаления
+    показываются только автору отзыва (проп owned вычисляется в BookDetailView
+    сравнением review.author.id с id текущего пользователя).
+-->
 <script setup lang="ts">
 import type { Review } from '../types'
 import { formatDate, t } from '../i18n'

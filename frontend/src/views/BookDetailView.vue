@@ -222,6 +222,12 @@
     </template>
 </template>
 
+<!--
+    Страница книги: данные книги, список отзывов и форма отзыва текущего
+    пользователя. Форма показывает один из трёх видов в зависимости от
+    состояния: гость → приглашение войти, автор без отзыва (или в режиме
+    editing) → форма, автор с готовым отзывом → карточка «Спасибо».
+-->
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -247,10 +253,12 @@ const editing = ref(false)
 const rating = ref(8)
 const text = ref('')
 const textInput = ref<HTMLTextAreaElement | null>(null)
+/** Отзыв текущего пользователя на эту книгу, если он уже есть. */
 const myReview = computed(() =>
     reviews.value.find((review) => review.author.id === auth.user?.id),
 )
 
+/** Перезагружает книгу и отзывы параллельно (используется после load и после submit/удаления). */
 async function refresh() {
     const [bookData, reviewData] = await Promise.all([
         getBook(bookId),
@@ -270,11 +278,13 @@ async function load() {
         loading.value = false
     }
 }
+/** Сбрасывает форму отзыва к значениям по умолчанию и выходит из режима редактирования. */
 function resetForm() {
     editing.value = false
     rating.value = 8
     text.value = ''
 }
+/** Заполняет форму текущим отзывом пользователя и переводит фокус в textarea. */
 async function startEdit() {
     if (!myReview.value) {
         return
@@ -287,6 +297,12 @@ async function startEdit() {
     await nextTick()
     textInput.value?.focus()
 }
+/**
+ * Валидирует форму на клиенте и создаёт или обновляет отзыв (в зависимости
+ * от editing). Клиентская проверка дублирует ограничения бэкенда
+ * (books/models.py: rating 1–10, text не пустой) только ради мгновенной
+ * обратной связи — финальную проверку всё равно делает сервер.
+ */
 async function submit() {
     if (
         !Number.isInteger(rating.value) ||
@@ -316,6 +332,7 @@ async function submit() {
         busy.value = false
     }
 }
+/** Удаляет отзыв пользователя после подтверждения через window.confirm. */
 async function removeReview() {
     if (!myReview.value || !window.confirm(t('detail.confirmDelete'))) {
         return

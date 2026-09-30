@@ -1,3 +1,5 @@
+"""Management-команда `python manage.py seed_books` — демо-данные каталога."""
+
 from django.core.management.base import BaseCommand
 
 from books.models import Book
@@ -71,6 +73,14 @@ BOOKS = [
 
 
 class Command(BaseCommand):
+    """Добавляет восемь демо-книг, безопасно повторяемая (идемпотентная).
+
+    Использует get_or_create по (title, author): существующие книги не
+    дублируются и не перезаписываются, даже если их описание было
+    отредактировано в Django Admin (см. тест
+    test_seed_is_repeatable_and_preserves_edits в books/tests.py).
+    """
+
     help = "Add eight demo books without duplicating or overwriting existing books."
 
     def handle(self, *args, **options):

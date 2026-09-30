@@ -1,3 +1,5 @@
+"""Регистрация модели User в Django Admin с формами под email-логин."""
+
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
@@ -6,12 +8,16 @@ from .models import User
 
 
 class CustomUserCreationForm(UserCreationForm):
+    """Форма создания пользователя в админке: email вместо username."""
+
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ("email", "display_name")
 
 
 class CustomUserChangeForm(UserChangeForm):
+    """Форма редактирования пользователя в админке без поля username."""
+
     class Meta(UserChangeForm.Meta):
         model = User
         fields = "__all__"
@@ -19,6 +25,8 @@ class CustomUserChangeForm(UserChangeForm):
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
+    """Настройка стандартного UserAdmin под кастомную модель User."""
+
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     list_display = ("email", "display_name", "is_staff", "is_active")

@@ -1,11 +1,17 @@
 import axios from 'axios'
 import { hasKey, t } from '../i18n'
 
+/**
+ * Общий axios-клиент для всех запросов к API. Базовый URL берётся из
+ * `VITE_API_BASE_URL` (см. .env.example), с запасным значением для локальной
+ * разработки без переменных окружения.
+ */
 const client = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api',
     timeout: 10000,
 })
 
+/** Удаляет access и refresh токены из localStorage (выход из сессии). */
 export function clearTokens() {
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')
@@ -52,11 +58,29 @@ client.interceptors.response.use(undefined, async (error: unknown) => {
     return Promise.reject(error)
 })
 
+/**
+ * Переводит имя поля DRF (`display_name`) в подпись для пользователя.
+ * Если перевода для поля нет в словаре (`i18n/locales`), возвращает имя
+ * поля как есть, заменив подчёркивания на пробелы.
+ */
 function fieldLabel(field: string): string {
     const key = `fields.${field}`
     return hasKey(key) ? t(key) : field.replaceAll('_', ' ')
 }
 
+/**
+ * Превращает любую ошибку axios-запроса в готовую для показа пользователю
+ * строку на текущем языке (см. src/i18n).
+ *
+ * Порядок проверок: не-axios-ошибка → сеть недоступна → 5xx → 401 → 404 →
+ * тело ответа DRF (объект `{ поле: [сообщения] }` или `{ detail }`) →
+ * запасной текст. Из тела ответа собираются все поля через пробел, а
+ * `detail`/`non_field_errors` выводятся без имени поля.
+ *
+ * @param error - значение, пойманное в catch (тип unknown, так как catch
+ *   в TypeScript не гарантирует тип исключения)
+ * @returns готовое сообщение об ошибке для показа в интерфейсе
+ */
 export function errorMessage(error: unknown): string {
     if (!axios.isAxiosError(error)) {
         return t('errors.generic')

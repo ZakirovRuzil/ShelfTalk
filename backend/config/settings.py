@@ -1,3 +1,6 @@
+"""Настройки Django. Секреты и параметры окружения берутся из .env в корне
+репозитория (см. .env.example и docs/SETUP.md), а не хранятся здесь."""
+
 import os
 from datetime import timedelta
 from pathlib import Path

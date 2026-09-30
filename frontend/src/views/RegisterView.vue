@@ -72,6 +72,7 @@
     </section>
 </template>
 
+<!-- Форма регистрации. Токены не выдаются, поэтому после успеха ведёт на страницу входа. -->
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
