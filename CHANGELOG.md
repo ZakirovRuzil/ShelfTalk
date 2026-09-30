@@ -5,6 +5,14 @@ Keep a Changelog, and the project uses Semantic Versioning.
 
 ## [Unreleased]
 
+### Added
+
+- Russian interface locale and a language switcher, alongside a small custom i18n module
+  (`frontend/src/i18n/`) with plural forms via `Intl.PluralRules` and localized date
+  formatting.
+- Project documentation: architecture, setup, data model, and development guides under
+  `docs/`, plus docstrings/JSDoc across backend and frontend modules.
+
 ## [1.0.0] - 2026-09-16
 
 ### Added

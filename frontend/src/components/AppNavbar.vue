@@ -68,6 +68,7 @@
     </header>
 </template>
 
+<!-- Шапка сайта: бренд, ссылка на каталог, переключатель языка и блок входа/аккаунта. -->
 <script setup lang="ts">
 import { useAuthStore } from '../stores/auth'
 import { locale, locales, setLocale, t } from '../i18n'

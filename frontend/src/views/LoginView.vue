@@ -67,6 +67,7 @@
     </section>
 </template>
 
+<!-- Форма входа. После успеха возвращает на главную. -->
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'

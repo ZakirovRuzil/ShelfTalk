@@ -1,9 +1,18 @@
+"""Модели каталога: книги и отзывы пользователей."""
+
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 
 class Book(models.Model):
+    """Книга каталога.
+
+    Книги создаются и редактируются только через Django Admin или
+    management-команду seed_books — публичный API отдаёт их лишь на
+    чтение (books.views.BookListView, BookDetailView).
+    """
+
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=200)
     description = models.TextField(blank=True)
@@ -19,6 +28,16 @@ class Book(models.Model):
 
 
 class Review(models.Model):
+    """Отзыв пользователя на книгу: оценка 1-10 и текст.
+
+    Ограничение «один отзыв на книгу от одного пользователя» и диапазон
+    оценки заданы constraints и продублированы на уровне API
+    (books.views.BookReviewsView.perform_create,
+    books.serializers.ReviewSerializer) — так ошибка валидации становится
+    аккуратным 400 с сообщением, а constraint остаётся последней защитой
+    от гонки при одновременных запросах.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="reviews")
     rating = models.PositiveSmallIntegerField(

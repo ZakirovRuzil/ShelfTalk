@@ -1,3 +1,5 @@
+"""Маршруты каталога, подключённые в config/urls.py под /api/."""
+
 from django.urls import path
 
 from .views import BookDetailView, BookListView, BookReviewsView, ReviewDetailView

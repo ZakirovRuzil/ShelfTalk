@@ -42,6 +42,11 @@
     </footer>
 </template>
 
+<!--
+    Корневой компонент. Один раз при старте подгружает текущего пользователя
+    (если в localStorage есть access-токен) и только после этого показывает
+    страницы — чтобы навбар не мигал состоянием «гость» перед входом.
+-->
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import AppNavbar from './components/AppNavbar.vue'

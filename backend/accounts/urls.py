@@ -1,3 +1,5 @@
+"""Маршруты аутентификации, подключённые в config/urls.py под /api/auth/."""
+
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 

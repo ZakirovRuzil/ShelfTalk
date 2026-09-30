@@ -138,6 +138,7 @@
     </section>
 </template>
 
+<!-- Главная страница: список книг с клиентским поиском по названию/автору. -->
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { getBooks } from '../api/books'
@@ -150,6 +151,9 @@ const books = ref<Book[]>([])
 const search = ref('')
 const loading = ref(true)
 const error = ref('')
+// Поиск выполняется на клиенте по уже загрученному списку (API его не
+// поддерживает и не пагинирует — см. docs/API.md), поэтому годится только
+// для небольшого каталога.
 const filteredBooks = computed(() => {
     const query = search.value.trim().toLowerCase()
     return books.value.filter((book) =>

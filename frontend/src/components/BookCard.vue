@@ -43,6 +43,7 @@
     </RouterLink>
 </template>
 
+<!-- Карточка книги в сетке каталога (см. BooksView.vue). -->
 <script setup lang="ts">
 import type { Book } from '../types'
 import { t } from '../i18n'
